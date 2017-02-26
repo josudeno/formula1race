@@ -7,15 +7,18 @@ import java.util.Observable;
  */
 public class Car extends Observable
 {
-
+    private int carNumber;
+    private float initialVelocity = 0;
     private float topSpeed = 150;
     private float acceleration = 2;
-    /** Expressed in meters */
-    private float currentDistance;
     private float speed;
     private boolean nitroUsed = false;
     private float secondsPassed;
+    private float currentSpeed;
 
+    public Car(int carNumber) {
+        this.carNumber = carNumber;
+    }
 
     /**
      * Top speed is (150 + 10*i) km per hour
@@ -23,11 +26,7 @@ public class Car extends Observable
      * @return
      */
     public float getTopSpeed() {
-        return topSpeed;
-    }
-
-    public float setTopSpeed(Integer i) {
-        return topSpeed + (10 * i);
+        return topSpeed + (10 * carNumber);
     }
 
     /**
@@ -35,12 +34,13 @@ public class Car extends Observable
      *
      * @return float
      */
-    public void accelerate(Integer second) {
-        currentDistance = acceleration * second;
+    public float getAcceleration() {
+        return acceleration * carNumber;
     }
 
     public float getCurrentDistance() {
-        return currentDistance;
+        Float distance = (initialVelocity * this.secondsPassed) + (0.5f * getAcceleration()) * (this.secondsPassed * this.secondsPassed);
+        return distance;
     }
 
 
@@ -55,17 +55,25 @@ public class Car extends Observable
         return speed;
     }
 
+    /**
+     * Returns the current speed.
+     *
+     * @return
+     */
     public float getSpeed() {
-        speed = currentDistance * 12960;
-        return speed;
+        currentSpeed = 0 + this.acceleration * this.secondsPassed;
+        return currentSpeed;
     }
 
     public void setSpeed(float speed) {
         this.speed = speed;
     }
 
+    public void setElapsedTime(Integer elapsedTime) {
+        this.secondsPassed = elapsedTime;
+    }
+
     public void updateStatus(int seconds) {
-        this.secondsPassed = seconds;
         this.setChanged();
         notifyObservers(seconds);
     }

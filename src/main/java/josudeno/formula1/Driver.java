@@ -27,19 +27,17 @@ public class Driver implements Observer
         }
     }
 
-    public void accelerate(Integer seconds) {
-        car.accelerate(seconds);
-    }
 
     @Override
     public void update(Observable o, Object arg) {
         if (o instanceof Car) {
-            this.accelerate((Integer) arg);
             this.assessPosition((Car) o);
+            car.setElapsedTime((int)arg);
             System.out.println("*********Car ******* "+this.toString());
-            System.out.println("current distance "+car.getCurrentDistance());
-            System.out.println("current speed "+car.getSpeed());
-            System.out.println("current topSpeed "+car.getTopSpeed());
+            System.out.println("current distance: "+car.getCurrentDistance());
+            System.out.println("current speed: "+car.getSpeed());
+            System.out.println("current topSpeed: "+car.getTopSpeed());
+            System.out.println("Elapsed time: "+arg);
             System.out.println("################");
         }
     }

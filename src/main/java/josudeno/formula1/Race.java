@@ -25,7 +25,7 @@ public class Race implements Runnable {
     public void prepareRace() {
 
         for (Integer x = 1; x < this.teamsAmount+1; x++) {
-            Car car = new Car();
+            Car car = new Car(x);
             this.teams.put(x, new Team(x, car, new Driver(car, this.teamsAmount)));
         }
 
